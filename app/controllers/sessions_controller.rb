@@ -12,8 +12,7 @@ class SessionsController < ApplicationController
     if account_existence?
       if verification?
         session[:user_id] = login_user.id
-        redirect_to login_path, notice: 'ログインした'
-        # TODO: 後でlogin_pathをroot_pathに変更
+        redirect_to root_path, notice: 'ログインした'
       else
         redirect_to login_path, alert: 'ユーザーIDとパスワードが一致するユーザーが存在しない'
       end

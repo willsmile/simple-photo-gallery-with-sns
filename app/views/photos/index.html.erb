@@ -1,14 +1,31 @@
-<p style="color: green"><%= notice %></p>
+<h2>写真一覧</h2>
 
-<h1>Photos</h1>
+<%= link_to '写真アップロード', new_photo_path %>
 
-<div id="photos">
+<ul class="photos">
   <% @photos.each do |photo| %>
-    <%= render photo %>
-    <p>
-      <%= link_to "Show this photo", photo %>
-    </p>
+    <li class="photo">
+      <p><%= photo.title %></p>
+      <%= image_tag photo.image_file.variant(:thumb) %>
+    </li>
   <% end %>
-</div>
+<ul>
 
-<%= link_to "New photo", new_photo_path %>
+<%# 画面のデザインは仕様で書かれていないため、仕様の範囲外だと認識し、 %>
+<%# 作業効率を向上のため、以下のように仮実装しました %>
+<style>
+  .photos {
+    display: flex;
+    justify-content: center;
+  }
+
+  .photo {
+    list-style: none;
+    text-align: center;
+  }
+
+  .photo:nth-child(2) {
+    margin: 0 10px;
+  }
+}
+</style>
