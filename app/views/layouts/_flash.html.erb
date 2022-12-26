@@ -1,0 +1,16 @@
+<ul>
+  <% if flash.notice.present? %>
+    <% multiple_lines(flash.notice).each do |message| %>
+      <li style="color: green">
+        <%= message %>
+      </li>
+    <% end %>
+  <% end %>
+  <% if flash.alert.present? %>
+    <% multiple_lines(flash.alert).each do |message| %>
+      <li style="color: red">
+        <%= message %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
