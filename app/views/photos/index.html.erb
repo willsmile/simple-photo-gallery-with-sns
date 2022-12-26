@@ -1,5 +1,9 @@
 <h2>写真一覧</h2>
 
+<% unless my_tweet_authorized? %>
+  <%= link_to 'MyTweetAppと連携', oauth_authorize_path %>
+<% end %> 
+<br>
 <%= link_to '写真アップロード', new_photo_path %>
 
 <ul class="photos">
