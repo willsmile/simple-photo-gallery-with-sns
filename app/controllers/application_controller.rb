@@ -3,15 +3,9 @@ class ApplicationController < ActionController::Base
   helper_method :my_tweet_authorized?
   before_action :authenticate!
 
-  class Unauthenticated < StandardError; end
   class Forbidden < StandardError; end
 
-  rescue_from Unauthenticated, with: :rescue_unauthenticated
   rescue_from StandardError, with: :rescue_unexpected_exception
-
-  def rescue_unauthenticated(err = nil)
-    render 'errors/unauthenticated', status: 401, layout: 'error', formats: [:html]
-  end
 
   def rescue_forbidden(err = nil)
     render 'errors/forbidden', status: 403, layout: 'error',  formats: [:html]
@@ -34,6 +28,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate!
-    raise Unauthenticated unless current_user
+    redirect_to login_path unless current_user
   end
 end
