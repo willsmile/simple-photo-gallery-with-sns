@@ -3,10 +3,17 @@ class PhotosController < ApplicationController
     @photo = Photo.new
   end
 
-  def index
+  def create
+    @photo = current_user.photos.build(photo_params)
+
+    if @photo.save
+      redirect_to photos_path, notice: '写真はアップロードしました'
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
-  def create
+  def index
   end
 
   private
