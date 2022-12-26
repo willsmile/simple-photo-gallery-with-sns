@@ -14,7 +14,7 @@ class PhotosController < ApplicationController
   end
 
   def index
-    @photos = Photo.all
+    @photos = current_user.photos
   end
 
   def upload_to_mytweet
