@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticate!
 
-  def new; end
+  def new
+    redirect_to root_path if current_user
+  end
 
   def create
     if invalid_params_messages.present?
