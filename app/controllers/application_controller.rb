@@ -5,13 +5,14 @@ class ApplicationController < ActionController::Base
 
   class Forbidden < StandardError; end
 
+  rescue_from Forbidden, with: :render_forbidden
   rescue_from StandardError, with: :rescue_unexpected_exception
 
-  def rescue_forbidden(err = nil)
+  def render_forbidden
     render 'errors/forbidden', status: 403, layout: 'error',  formats: [:html]
   end
 
-  def rescue_unexpected_exception(err = nil)
+  def rescue_unexpected_exception
     render 'errors/server_error', status: 500, layout: 'error',  formats: [:html]
   end
 
