@@ -17,6 +17,20 @@ class PhotosController < ApplicationController
     @photos = Photo.all
   end
 
+  def upload_to_mytweet
+    raise Forbidden unless my_tweet_authorized?
+
+    photo = current_user.photos.find(params[:id])
+    data = tweet_data(photo)
+    resp = MyTweetApp.new(session[:access_token]).tweet(data)
+
+    if resp&.code == '201'
+      redirect_to photos_path, notice: 'MyTweetAppへの写真投稿は成功しました'
+    else
+      redirect_to photos_path, alert: 'MyTweetAppへの写真投稿は失敗しました'
+    end
+  end
+
   private
 
   def photo_params
@@ -24,5 +38,12 @@ class PhotosController < ApplicationController
       :title,
       :image_file
     )
+  end
+
+  def tweet_data(photo)
+    {
+      text: photo.title,
+      url: photo.image_url
+    }
   end
 end

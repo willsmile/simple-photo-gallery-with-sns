@@ -1,6 +1,30 @@
 require "net/http"
 
 class MyTweetApp
+  def initialize(access_token)
+    @access_token = access_token
+  end
+
+  def tweet(data)
+    uri = URI.parse(ENV.fetch('TWEET_PHOTO_API_URL'))
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Post.new(uri.request_uri)
+
+    req['Content-Type'] = 'application/json'
+    req['Authorization'] = "Bearer #{@access_token}"
+    req.body = data.to_json
+
+    resp = http.request(req)
+
+    begin
+      resp.value
+    rescue Net::HTTPExceptions => e
+      logger.error("ツイート投稿失敗: #{e}")
+    end
+
+    resp
+  end
+
   class << self
     def auth_endpoint
       uri = URI.parse(ENV.fetch('OAUTH_AUTHORIZE_URL'))

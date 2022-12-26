@@ -11,6 +11,9 @@
     <li class="photo">
       <p><%= photo.title %></p>
       <%= image_tag photo.image_file.variant(:thumb) %>
+      <% if my_tweet_authorized? %>
+        <%= button_to 'MyTweetAppへの投稿', upload_to_mytweet_photo_path(photo) %>
+      <% end %> 
     </li>
   <% end %>
 <ul>
